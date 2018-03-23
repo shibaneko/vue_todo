@@ -1,9 +1,0 @@
-.v-enter-active, .v-leave-active {
-  transition: opacity 1s;
-}
-.v-enter, .v-leave {
-  opacity: 0;
-}
-.info {
-  font-size: 20px;
-}

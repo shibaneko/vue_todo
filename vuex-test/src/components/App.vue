@@ -1,8 +1,12 @@
 <template>
   <div id="app">
-    <div v-if="showFlag">
-      <modal></modal>
-    </div>
+    <!-- <transition>
+      <modal v-if="showFlag"></modal>
+    <transition> -->
+    <transition>
+      <div v-if="test">TEST</div>
+    </transition>
+    <button @click="cFlag">button</button>
     <ul v-if="isTask">
       <div>
         <span>総タスク :<span>{{ items.length }}</span></span>
@@ -33,6 +37,7 @@ export default {
   data () {
     return {
       inputTitle: "",
+      test: false,
     };
   },
   computed: {
@@ -59,17 +64,17 @@ export default {
     reset: function() {
       this.inputTitle = "";
     },
+    cFlag: function() {
+      this.test = !this.test;
+    },
   },
 };
 </script>
 <style>
-#all>input {
-  background-color: white;
+.v-enter-active, .v-leave-active {
+  transition: opacity 0.5s;
 }
-#all>input:not(.status) {
-  background-color: red;
-}
-#all>input.status {
-  background-color: blue;
+.v-enter, .v-leave-to {
+  opacity: 0;
 }
 </style>
