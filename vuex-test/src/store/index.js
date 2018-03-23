@@ -5,7 +5,34 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   namespaced: true, 
   state: {
-    counter: 4,
+    version: '0.0.1',
+    navs: [
+      {
+        id: 1,
+        text: 'HOME',
+        img: './logo.png'
+      },
+      {
+        id: 2,
+        text: 'MAIN',
+        img: './logo.png'
+      },
+      {
+        id: 3,
+        text: 'SUB1',
+        img: './logo.png'
+      },
+      {
+        id: 4,
+        text: 'SUB2',
+        img: './logo.png'
+      },
+      {
+        id: 5,
+        text: 'INFOMATION',
+        img: './logo.png'
+      }
+    ],
     items: [
       {
         id: 1,
@@ -22,11 +49,34 @@ export default new Vuex.Store({
         is_do: false,
         title: 'タスク３'
       },
+      {
+        id: 4,
+        is_do: true,
+        title: 'タスク４'
+      },
+      {
+        id: 5,
+        is_do: false,
+        title: 'タスク５'
+      },
+      {
+        id: 6,
+        is_do: true,
+        title: 'タスク６'
+      },
+      {
+        id: 7,
+        is_do: false,
+        title: 'タスク７'
+      },
     ],
   },
   getters: {
     isTask: store => {
       return !!(store.items.length);
+    },
+    allTask: store => {
+      return store.items.length;
     },
     completeTask: store => {
       return store.items.filter(item => {
@@ -53,11 +103,9 @@ export default new Vuex.Store({
       let newItem = null;
       if(payload !== ""){
         newItem = {
-          id: context.state.counter,
           title: payload,
           is_do: false,
         };
-        context.state.counter++;
       }
       context.commit('addTask', newItem);
     },

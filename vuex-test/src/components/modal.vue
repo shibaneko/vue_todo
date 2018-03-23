@@ -21,8 +21,9 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss" scoped>
 .modalBack {
+  z-index: 9998;
   position: fixed;
   top: 0;
   left: 0;
@@ -31,6 +32,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.8);
 }
 .modalContents {
+  z-index: 9999;
   position: fixed;
   top: 0;
   left: 0;
@@ -42,13 +44,14 @@ export default {
   background-color: white;
   border-radius: 10px;
   border: solid 2px black;
-}
-.modalContents > span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  font-size: 18px;
+
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 18px;
+  }
 }
 </style>
