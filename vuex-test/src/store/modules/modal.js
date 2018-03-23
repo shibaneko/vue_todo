@@ -2,7 +2,7 @@ const modal = {
   namespaced: true,
   state: {
     modalTitle: "",
-    showFlag: false
+    showFlag: false,
   },
   actions: {
     showModal(context, payload) {

@@ -1,80 +1,75 @@
 <template>
-  <div id="app">
-    <!-- <transition>
-      <modal v-if="showFlag"></modal>
-    <transition> -->
-    <transition>
-      <div v-if="test">TEST</div>
-    </transition>
-    <button @click="cFlag">button</button>
-    <ul v-if="isTask">
-      <div>
-        <span>総タスク :<span>{{ items.length }}</span></span>
-        <span>完了タスク :<span>{{ completeTask }}</span></span>
-        <span>未完了タスク :<span>{{ notCompleteTask }}</span></span>
+  <div id="app" class="wrapper">
+    <div class="contents">
+      <Header></Header>
+      <Navigation></Navigation>
+      <div class="taskDeck">
+        <item :items="items"></item>
       </div>
-      <item v-for="item in items" :item="item" :key="item.id"></item>
-    </ul>
-    <div v-else>
-      <span>タスクがありません</span>
-    </div>
-    <div>
-      <input type="text" v-model="inputTitle" @keydown.enter="[addTask(inputTitle), reset()]">
-      <button @click="[addTask(inputTitle), reset()]">追加</button>
+      <Forms></Forms>
+      <Footer></Footer>
+      <transition name="fade">
+        <modal v-if="showFlag"></modal>
+      </transition>
     </div>
   </div>
 </template>
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import Item from './Item.vue';
 import Modal from './modal.vue';
+import Header from './header.vue';
+import Footer from './footer.vue';
+import Navigation from './navigation.vue';
+import Forms from './forms.vue';
 export default {
   name: 'app',
   components: {
     Item,
     Modal,
-  },
-  data () {
-    return {
-      inputTitle: "",
-      test: false,
-    };
+    Header,
+    Footer,
+    Navigation,
+    Forms,
   },
   computed: {
     ...mapState({
       items: state => state.items
     }),
     ...mapState('modal', {
-      showFlag: state => state.showFlag
+      showFlag: state => state.showFlag,
     }),
-    ...mapGetters([
-      'isTask',
-      'completeTask',
-      'notCompleteTask',
-    ]),
   },
   methods: {
-    ...mapActions([
-      'resetIsSuccess',
-      'addTask'
-    ]),
     ...mapActions('modal', [
       'showModal'
     ]),
-    reset: function() {
-      this.inputTitle = "";
-    },
-    cFlag: function() {
-      this.test = !this.test;
-    },
   },
 };
 </script>
-<style>
-.v-enter-active, .v-leave-active {
-  transition: opacity 0.5s;
+<style lang="scss" scoped>
+.wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+
+  .contents {
+    width: 960px;
+    margin: 0 auto;
+    background-color: rgba(200, 200, 120, 0.5);
+
+    .taskDeck {
+      width: calc(100% - 40px);
+      margin: 0 20px;
+      margin-top: 30px;
+    }
+  }
 }
-.v-enter, .v-leave-to {
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.35s;
+}
+.fade-enter, .fade-leave-to {
   opacity: 0;
 }
 </style>
