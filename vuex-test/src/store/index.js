@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import modal from './modules/modal';
 Vue.use(Vuex);
-const app = new Vuex.Store({
+export default new Vuex.Store({
   namespaced: true, 
   state: {
     counter: 4,
@@ -40,7 +40,7 @@ const app = new Vuex.Store({
     },
   },
   modules: {
-    modal: modal,
+    modal,
   },
   actions: {
     resetISuccess(context, payload) {
@@ -93,5 +93,3 @@ const app = new Vuex.Store({
     },
   },
 });
-
-export default app;
