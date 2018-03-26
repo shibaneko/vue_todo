@@ -8,8 +8,10 @@
       </div>
       <Forms></Forms>
       <Footer></Footer>
-      <transition name="fade">
         <modal v-if="showFlag"></modal>
+      </transition>
+      <transition name="fade">
+        <editModal v-if="showEditFlag"></editModal>
       </transition>
     </div>
   </div>
@@ -22,27 +24,35 @@ import Header from './header.vue';
 import Footer from './footer.vue';
 import Navigation from './navigation.vue';
 import Forms from './forms.vue';
+import editModal from './editModal.vue';
 export default {
-  name: 'app',
   components: {
     Item,
     Modal,
+    editModal,
     Header,
     Footer,
     Navigation,
     Forms,
   },
+  created() {
+    this.getTaskData("test");
+  },
   computed: {
     ...mapState({
-      items: state => state.items
+      items: state => state.items,
     }),
     ...mapState('modal', {
       showFlag: state => state.showFlag,
     }),
+    ...mapState('editModal', {
+      showEditFlag: state => state.showEditFlag,
+    }),
   },
   methods: {
+    ...mapActions(['getTaskData']),
     ...mapActions('modal', [
-      'showModal'
+      'showModal',
     ]),
   },
 };

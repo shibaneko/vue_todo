@@ -6,15 +6,15 @@ const modal = {
   },
   actions: {
     showModal(context, payload) {
-      context.commit('showModal', modalData);
+      context.commit('showModal', payload);
     },
     hideModal(context, payload) {
-      context.commit('hideModal');
+      context.commit('hideModal', payload);
     },
   },
   mutations: {
     showModal(state, payload) {
-      state.modalTitle = payload.modalData;
+      state.modalTitle = payload.payload;
       state.showFlag = true;
     },
     hideModal(state, payload) {

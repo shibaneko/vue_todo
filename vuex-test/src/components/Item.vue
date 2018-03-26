@@ -2,9 +2,8 @@
   <div>
     <ul v-if="items.length">
       <transition-group name="slide" v-if="isTask">
-        <li v-for="(item, index) in items" :key="index" class="taskCardWrap">
-          <span v-bind:class="{ 'is-do': item.is_do }" @click="doneTask(item)">{{ item.title }}</span>
-          <input type="button" @click="deleteTask(item)" value="×">
+        <li v-for="(item, index) in items" :key="index" class="taskCardWrap" @click="showEditModal(item)">
+          <span v-bind:class="{ 'is-do': item.is_do }">{{ item.title }}</span>
         </li>
       </transition-group>
     </ul>
@@ -25,7 +24,11 @@ export default {
   methods: {
     ...mapActions([
       'doneTask',
-      'deleteTask'
+      'deleteTask',
+      'editTask',
+    ]),
+    ...mapActions('editModal', [
+      'showEditModal',
     ]),
   },
 };
@@ -50,6 +53,7 @@ li > span.is-do {
   background-color: white;
   margin: 0 10px 20px 10px;
   box-shadow: 8px 8px rgb(100, 100, 100);
+  overflow: hidden;
 
   &:nth-child(-n + 5) {
     margin-top: 20px;
