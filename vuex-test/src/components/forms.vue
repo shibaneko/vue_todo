@@ -1,8 +1,8 @@
 <template>
   <div class="formsContents">
     <div class="addInputArea">
-      <input type="text" v-model="inputTitle">
-      <button @click="[addTask(inputTitle), reset()]">追加</button>
+      <input class="taskName" type="text" v-model="inputTitle">
+      <button class="addTaskButton" @click="[addTask(inputTitle), reset()]">追加</button>
     </div>
   </div>
 </template>
@@ -28,11 +28,10 @@ export default {
 <style lang="scss" scoped>
 .formsContents {
   width: calc(100% - 40px);
-  margin: 30px 20px 50px 40px;
-  background-color: white;
+  margin: 30px 20px 50px 20px;
 
   .addInputArea {
-    width: 30%;
+    width: 450px;
 
     &:before,
     &:after {
@@ -43,18 +42,36 @@ export default {
       clear:both;
     }
 
+    input, button {
+      box-sizing: border-box;
+      border: 3px solid rgb(100, 100, 100);
+
+      &:focus {
+        outline: none;
+      }
+    }
     input {
+      border-radius: 10px 0 0 10px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    button {
+      border-left: none;
+      border-radius: 0 10px 10px 0;
+      background-color: rgb(230, 120, 140);
+    }
+
+    input.taskName {
       float: left;
       width: calc(100% - 50px);
       height: 30px;
+      
     }
-    button {
+    button.addTaskButton {
       float: left;
       width: 50px;
       height: 30px;
     }
   }
-
 }
-
 </style>
