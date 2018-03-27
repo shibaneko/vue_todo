@@ -11,70 +11,8 @@ export default new Vuex.Store({
   namespaced: true, 
   state: {
     version: '0.0.1',
-    navs: [
-      {
-        id: 1,
-        text: 'HOME',
-        img: './logo.png'
-      },
-      {
-        id: 2,
-        text: 'MAIN',
-        img: './logo.png'
-      },
-      {
-        id: 3,
-        text: 'SUB1',
-        img: './logo.png'
-      },
-      {
-        id: 4,
-        text: 'SUB2',
-        img: './logo.png'
-      },
-      {
-        id: 5,
-        text: 'INFOMATION',
-        img: './logo.png'
-      }
-    ],
-    items: [
-    //   {
-    //     id: 1,
-    //     is_do: false,
-    //     title: 'タスク１'
-    //   },
-    //   {
-    //     id: 2,
-    //     is_do: true,
-    //     title: 'タスク２'
-    //   },
-    //   {
-    //     id: 3,
-    //     is_do: false,
-    //     title: 'タスク３'
-    //   },
-    //   {
-    //     id: 4,
-    //     is_do: true,
-    //     title: 'タスク４'
-    //   },
-    //   {
-    //     id: 5,
-    //     is_do: false,
-    //     title: 'タスク５'
-    //   },
-    //   {
-    //     id: 6,
-    //     is_do: true,
-    //     title: 'タスク６'
-    //   },
-    //   {
-    //     id: 7,
-    //     is_do: false,
-    //     title: 'タスク７'
-    //   },
-    ],
+    navs: [],
+    items: [],
   },
   getters: {
     isTask: store => {
@@ -118,10 +56,12 @@ export default new Vuex.Store({
     deleteTask(context, payload) {
       context.commit('deleteTask', payload);
     },
-    getTaskData(context, payload) {
+    getStateData(context, payload) {
       axios.get(uri)
       .then(res => {
-        context.commit('getTaskData', Vue.set(context.state, 'items', res.data[0].items));
+        Vue.set(context.state, 'navs', res.data[0].navs)
+        Vue.set(context.state, 'items', res.data[0].items)
+        context.commit('getStateData');
       });
     },
   },
@@ -154,8 +94,9 @@ export default new Vuex.Store({
       let index = state.items.indexOf(payload);
       state.items.splice(index, 1);
     },
-    getTaskData(state, payload) {
-      console.log(state);
+    getStateData(state, payload) {
+      console.log(state.navs);
+      console.log(state.items);
     },
   },
 });
