@@ -3,10 +3,7 @@
     <div class="contents">
       <Header></Header>
       <Navigation></Navigation>
-      <div class="taskDeck">
-        <item :items="items"></item>
-      </div>
-      <Forms></Forms>
+      <router-view></router-view>
       <Footer></Footer>
         <modal v-if="showFlag"></modal>
       </transition>
@@ -18,30 +15,29 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
-import Item from './Item.vue';
-import Modal from './modal.vue';
-import Header from './header.vue';
-import Footer from './footer.vue';
-import Navigation from './navigation.vue';
-import Forms from './forms.vue';
-import editModal from './editModal.vue';
+import Home from './Home.vue';
+import Modal from './Modal.vue';
+import Header from './Header.vue';
+import Footer from './Footer.vue';
+import Navigation from './Navigation.vue';
+import EditModal from './EditModal.vue';
+import * as constantFile from '../store/constantFile';
+
 export default {
   components: {
-    Item,
+    Home,
     Modal,
-    editModal,
     Header,
     Footer,
     Navigation,
-    Forms,
+    EditModal,
   },
   created() {
-    this.getStateData("test");
+    this.getStateData({
+      name: constantFile.LISTS_NAV,
+    });
   },
   computed: {
-    ...mapState({
-      items: state => state.items,
-    }),
     ...mapState('modal', {
       showFlag: state => state.showFlag,
     }),
@@ -51,9 +47,6 @@ export default {
   },
   methods: {
     ...mapActions(['getStateData']),
-    ...mapActions('modal', [
-      'showModal',
-    ]),
   },
 };
 </script>
@@ -67,12 +60,6 @@ export default {
     width: 960px;
     margin: 0 auto;
     background-color: rgba(200, 200, 120, 0.5);
-
-    .taskDeck {
-      width: calc(100% - 40px);
-      margin: 0 20px;
-      margin-top: 30px;
-    }
   }
 }
 

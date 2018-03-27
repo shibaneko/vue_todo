@@ -1,33 +1,108 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import actions from './actions';
+import mutations from './mutations';
 import modal from './modules/modal';
-import editModal from './modules/editModal';
-
-import axios from 'axios';
-const uri = './dist/public/json/items.json';
+import editModal from './modules/EditModal';
 
 Vue.use(Vuex);
+
 export default new Vuex.Store({
   namespaced: true, 
   state: {
-    version: '0.0.1',
+    version: '0.5.1',
     navs: [],
-    items: [],
+    items: [
+      {
+        type:homeTasks,
+        item: [
+          
+        ]
+      },
+      mainTasks: [],
+      sub1Tasks: [],
+      sub2Tasks: [],
+      infomationTasks: [],
+    ]
   },
   getters: {
-    isTask: store => {
-      return !!(store.items.length);
+    isHomeTask: store => {
+      return !!(store.homeTasks.length);
     },
-    allTask: store => {
+    allHomeTask: store => {
       return store.items.length;
     },
-    completeTask: store => {
-      return store.items.filter(item => {
+    completeHomeTask: store => {
+      return store.homeTasks.filter(item => {
         return item.is_do;
       }).length;
     },
-    notCompleteTask: store => {
-      return store.items.filter(item => {
+    notCompleteHomeTask: store => {
+      return store.homeTasks.filter(item => {
+        return !item.is_do;
+      }).length;
+    },
+    isMainTask: store => {
+      return !!(store.mainTasks.length);
+    },
+    allMainTask: store => {
+      return store.mainTasks.length;
+    },
+    completeMainTask: store => {
+      return store.mainTasks.filter(item => {
+        return item.is_do;
+      }).length;
+    },
+    notCompleteMainTask: store => {
+      return store.mainTasks.filter(item => {
+        return !item.is_do;
+      }).length;
+    },
+    isSub1Task: store => {
+      return !!(store.sub1Tasks.length);
+    },
+    allSub1Task: store => {
+      return store.sub1Tasks.length;
+    },
+    completeSub1Task: store => {
+      return store.sub1Tasks.filter(item => {
+        return item.is_do;
+      }).length;
+    },
+    notCompleteSub1Task: store => {
+      return store.sub1Tasks.filter(item => {
+        return !item.is_do;
+      }).length;
+    },
+    isSub2Task: store => {
+      return !!(store.sub2zTasks.length);
+    },
+    allSub2Task: store => {
+      return store.sub2Tasks.length;
+    },
+    completeSub2Task: store => {
+      return store.sub2Tasks.filter(item => {
+        return item.is_do;
+      }).length;
+    },
+    notCompleteSub2Task: store => {
+      return store.sub2Tasks.filter(item => {
+        return !item.is_do;
+      }).length;
+    },
+    isInfomationTask: store => {
+      return !!(store.infomationTasks.length);
+    },
+    allInfomationTask: store => {
+      return store.infomationTasks.length;
+    },
+    completeInfomationTask: store => {
+      return store.infomationTasks.filter(item => {
+        return item.is_do;
+      }).length;
+    },
+    notCompleteInfomationTask: store => {
+      return store.infomationTasks.filter(item => {
         return !item.is_do;
       }).length;
     },
@@ -36,67 +111,6 @@ export default new Vuex.Store({
     modal,
     editModal,
   },
-  actions: {
-    addTask(context, payload) {
-      let newItem = null;
-      if(payload !== ""){
-        newItem = {
-          title: payload,
-          is_do: false,
-        };
-      }
-      context.commit('addTask', newItem);
-    },
-    editTask(context, payload) {
-      context.commit('editTask', payload);
-    },
-    doneTask(context, payload) {
-      context.commit('doneTask', payload);
-    },
-    deleteTask(context, payload) {
-      context.commit('deleteTask', payload);
-    },
-    getStateData(context, payload) {
-      axios.get(uri)
-      .then(res => {
-        Vue.set(context.state, 'navs', res.data[0].navs)
-        Vue.set(context.state, 'items', res.data[0].items)
-        context.commit('getStateData');
-      });
-    },
-  },
-  mutations: {
-    addTask(state, payload) {
-      if(payload !== null) {
-        state.items.push(payload);
-          state.addText = payload.title;
-        if(!state.modal.showFlag) {
-          state.modal.showFlag = true;
-          state.modal.modalType = 1;
-          let title = payload.title;
-          if(title.length > 20) {
-            title = title.slice(-(title.length - 20)) + "...";
-          }
-          state.modal.modalTitle = title;
-        }
-      }
-    },
-    editTask(state, payload) {
-      state.editModal.showFlag = true;
-      state.editModal.editId = payload.id;
-      state.editModal.taskName = payload.title;
-    },
-    doneTask(state, payload) {
-      let index = state.items.indexOf(payload);
-      state.items[index].is_do = !payload.is_do;
-    },
-    deleteTask(state, payload) {
-      let index = state.items.indexOf(payload);
-      state.items.splice(index, 1);
-    },
-    getStateData(state, payload) {
-      console.log(state.navs);
-      console.log(state.items);
-    },
-  },
+  actions,
+  mutations,
 });

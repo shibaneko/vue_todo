@@ -2,14 +2,13 @@
   <div class="navigation">
     <ul v-if="navs.length">
       <li v-for="nav in navs" :key="nav.id">
-        <span>{{ nav.text }}</span>
+        <router-link :to="nav.root">{{ nav.text }}</router-link>
       </li>
     </ul>
   </div>
 </template>
 <script>
 import { mapState } from 'vuex';
-
 export default {
   data() {
     return {
@@ -42,13 +41,15 @@ export default {
     border-radius: 20px;
     margin-left: 10px;
 
-    span {
+    a {
       display: flex;
       justify-content: center;
       align-items: center;
       width: 100%;
       height: 100%;
       font-size: 14px;
+      text-decoration: none;
+      color: rgb(10, 10, 10);
     }
 
     &:first-child {

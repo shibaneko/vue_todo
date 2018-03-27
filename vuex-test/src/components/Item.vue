@@ -1,9 +1,10 @@
 <template>
   <div>
-    <ul v-if="items.length">
+    <span>{{ tasks.length }}</span>
+    <ul v-if="tasks.length">
       <transition-group name="slide" v-if="isTask">
-        <li v-for="(item, index) in items" :key="index" class="taskCardWrap" @click="showEditModal(item)">
-          <span v-bind:class="{ 'is-do': item.is_do }">{{ item.title }}</span>
+        <li v-for="(task, index) in tasks" :key="index" class="taskCardWrap" @click="showEditModal({data: task, name: taskName})">
+          <span v-bind:class="{ 'is-do': task.is_do }">{{ task.title }}</span>
         </li>
       </transition-group>
     </ul>
@@ -15,7 +16,16 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 export default {
-  props: ['items'],
+  props: {
+    tasks: {
+      type: Object,
+      default: () => {},
+    },
+    taskName: {
+      type: String,
+      default: () => "",
+    },
+  },
   computed: {
     ...mapGetters([
       'isTask',
@@ -30,6 +40,12 @@ export default {
     ...mapActions('editModal', [
       'showEditModal',
     ]),
+    rtnEditTask() {
+      this.$emit('rtnEdit');
+    },
+    rtnAddTask() {
+      this.$emit('rtnAdd');
+    },
   },
 };
 </script>

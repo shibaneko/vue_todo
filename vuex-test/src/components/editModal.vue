@@ -15,6 +15,9 @@
           <button :class="(is_do) ? 'is-complate' : ''" class="complate" @click="setTaskDo(!is_do)">{{ (is_do)? "未完了" : "完了" }}</button>
         </div>
         <div>
+          <input class="editApply" @click="deleteTask" type="button" value="消去" />
+        </div>
+        <div>
           <input class="editApply" @click="hideEditModal" type="button" value="閉" />
         </div>
       </div>
@@ -43,6 +46,7 @@ export default {
       'hideEditModal',
       'setTaskName',
       'setTaskDo',
+      'deleteTask',
     ]),
   },
 };
