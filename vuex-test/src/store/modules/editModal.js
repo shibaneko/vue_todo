@@ -21,6 +21,15 @@ const editModal = {
       });
       context.state.taskName = payload;
     },
+    deleteTask(context, payload) {
+      context.rootState.items.forEach(function(item, index, array) {
+        if (context.state.editId === item.id) {
+          array.splice(index, 1);
+        }
+      });
+      context.state.taskName = payload;
+      context.commit('hideEditModal');
+    },
     setTaskDo(context, payload) {
       context.rootState.items.forEach(function(item, index, array) {
         if (context.state.editId === item.id) {
