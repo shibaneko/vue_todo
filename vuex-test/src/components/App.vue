@@ -36,7 +36,7 @@ export default {
     Forms,
   },
   created() {
-    this.getTaskData("test");
+    this.getStateData("test");
   },
   computed: {
     ...mapState({
@@ -50,7 +50,7 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(['getTaskData']),
+    ...mapActions(['getStateData']),
     ...mapActions('modal', [
       'showModal',
     ]),
