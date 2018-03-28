@@ -33,9 +33,9 @@ export default {
     EditModal,
   },
   created() {
-    this.getStateData({
-      name: constantFile.LISTS_NAV,
-    });
+    this.getNavsData();
+    this.getAllTasksData();
+    console.log(this.$route);
   },
   computed: {
     ...mapState('modal', {
@@ -46,7 +46,10 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(['getStateData']),
+    ...mapActions([
+      'getNavsData',
+      'getAllTasksData',
+    ]),
   },
 };
 </script>

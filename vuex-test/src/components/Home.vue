@@ -2,13 +2,8 @@
   <div>
     <span>{{ text }}</span>
     <div class="taskDeck">
-      <item :tasks="homeTasks" @editTask="editHomeTask(item)" @addTask="addHomeTask(title)"></item>
+      <item :tasks="tasks"></item>
     </div>
-    <ul v-if="homeTasks.length">
-      <li v-for="homeTask in homeTasks" :key="homeTask.id">
-        {{ homeTask.title }}
-      </li>
-    </ul>
     <Forms></Forms>
   </div>
 </template>
@@ -24,30 +19,27 @@ export default {
   },
   data() {
     return {
-      text: 'HOME'
+      text: 'HOME',
+      type: constantFile.TASKS_NAME_HOME,
     };
   },
   created() {
-    this.getStateData({
-      name: constantFile.TASKS_NAME_HOME,
+    console.log("HOME");
+    this.getTasksData({
+      type: this.type
     });
   },
   computed: {
     ...mapState({
-      homeTasks: state => state.homeTasks,
+      tasks: state => state.tasks,
+      allTasks: state => state.allTasks,
     }),
   },
   methods: {
-    ...mapActions(['getStateData']),
+    ...mapActions(['getTasksData']),
     ...mapActions('modal', [
       'showModal',
     ]),
-    addHomeTask(title) {
-      
-    },
-    editHomeTask(item) {
-
-    },
   },
 };
 </script>

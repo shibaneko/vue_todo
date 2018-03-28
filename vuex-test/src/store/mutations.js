@@ -3,7 +3,7 @@ import Vue from 'vue';
 const mutations = {
   addTask(state, payload) {
     if(payload !== null) {
-      state[payload.name].push(payload.data);
+      state.tasks.push(payload.data);
         state.addText = payload.data.title;
       if(!state.modal.showFlag) {
         state.modal.showFlag = true;
@@ -29,21 +29,20 @@ const mutations = {
     let index = state.items.indexOf(payload);
     state.items.splice(index, 1);
   },
-  getStateData(state, payload) {
-    if(payload.name === 'navs'){
-      Vue.set(state, payload.name, payload.data[0][payload.name]);
-    }else if(payload.name === 'homeTasks'){
-      Vue.set(state, 'homeTasks', payload.data[0].homeTasks);
-    }else if(payload.name === 'mainTasks'){
-      Vue.set(state, 'mainTasks', payload.data[0].mainTasks);
-    }else if(payload.name === 'sub1Tasks'){
-      Vue.set(state, 'sub1Tasks', payload.data[0].sub1Tasks);
-    }else if(payload.name === 'sub2Tasks'){
-      Vue.set(state, 'sub2Tasks', payload.data[0].sub2Tasks);
-    }else if(payload.name === 'infomationTasks'){
-      Vue.set(state, 'infomationTasks', payload.data[0].infomationTasks);
-    }
+  getNavsData(state, payload) {
+    Vue.set(state, 'navs', payload);
+  },
+  getAllTasksData(state, payload) {
+    console.log("ALL"+payload.taskData);
+    Vue.set(state, 'nextId', state.nextId);
+    Vue.set(state, 'allTasks', payload.taskData);
+  },
+  getTasksData(state, payload) {
+    console.log('filter')
+    const tas = state.allTasks.filter((task) => {
+      return (task.type === payload.type);
+    });
+    Vue.set(state, 'tasks', tas);
   },
 };
-
 export default mutations;

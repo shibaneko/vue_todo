@@ -2,11 +2,11 @@
   <div>
     <span>{{ text }}</span>
     <div class="taskDeck">
-      <item :tasks="sub1Tasks"></item>
+      <item :tasks="tasks"></item>
     </div>
-    <ul v-if="sub1Tasks.length">
-      <li v-for="sub1Task in sub1Tasks" :key="sub1Task.id">
-        {{ sub1Task.title }}
+    <ul v-if="tasks.length">
+      <li v-for="task in tasks" :key="task.id">
+        {{ task.title }}
       </li>
     </ul>
   </div>
@@ -21,21 +21,22 @@ export default {
   },
   data() {
     return {
-      text: 'SUB1'
+      text: 'SUB1',
+      type: constantFile.TASKS_NAME_SUB1,
     };
   },
   created() {
-    this.getStateData({
-      name: constantFile.TASKS_NAME_SUB1,
+    this.getTasksData({
+      type: this.type,
     });
   },
   computed: {
     ...mapState({
-      sub1Tasks: state => state.sub1Tasks,
+      tasks: state => state.tasks,
     }),
   },
   methods: {
-    ...mapActions(['getStateData']),
+    ...mapActions(['getTasksData']),
   },
 };
 </script>
