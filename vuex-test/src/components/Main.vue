@@ -2,11 +2,11 @@
   <div>
     <span>{{ text }}</span>
     <div class="taskDeck">
-      <item :tasks="mainTasks" taskName="constantFile.TASKS_NAME_MAIN"></item>
+      <item :tasks="tasks"></item>
     </div>
-    <ul v-if="mainTasks.length">
-      <li v-for="mainTask in mainTasks" :key="mainTask.id">
-        {{ mainTask.title }}
+    <ul v-if="tasks.length">
+      <li v-for="task in tasks" :key="task.id">
+        {{ task.title }}
       </li>
     </ul>
   </div>
@@ -22,20 +22,22 @@ export default {
   data() {
     return {
       text: 'MAIN',
+      type: constantFile.TASKS_NAME_HOME,
     };
   },
   created() {
-    this.getStateData({
-      name: constantFile.TASKS_NAME_MAIN,
+    console.log(this.$route);
+    this.getTasksData({
+      type: this.type,
     });
   },
   computed: {
     ...mapState({
-      mainTasks: state => state.mainTasks,
+      tasks: state => state.tasks,
     }),
   },
   methods: {
-    ...mapActions(['getStateData']),
+    ...mapActions(['getTasksData']),
   },
 };
 </script>
