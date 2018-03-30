@@ -26,7 +26,6 @@ export default {
     };
   },
   created() {
-    console.log(this.$route);
     this.getTasksData({
       type: this.type,
     });
