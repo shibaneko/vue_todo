@@ -3,8 +3,8 @@
     <span>{{ tasks.length }}</span>
     <ul v-if="tasks.length">
       <transition-group name="slide" v-if="isTask">
-        <li v-for="(task, index) in tasks" :key="index" class="taskCardWrap">
-          <span v-bind:class="{ 'is-do': task.is_do }">{{ task.title }}</span>
+        <li v-for="task in tasks" :key="task.id" class="taskCardWrap" @click="showEditModal(task.id)"  v-bind:class="{ 'is-do': task.is_do }">
+          <span>{{ task.title }}</span>
         </li>
       </transition-group>
     </ul>
@@ -39,12 +39,21 @@ ul {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-li > span {
-  cursor: pointer;
-}
-li > span.is-do {
-  text-decoration: line-through;
+
+  li {
+    background-color: rgb(220, 220, 220);
+
+    &.is-do {
+      background-color: rgba(100,100,100,0.75);
+    }
+
+    & > span {
+      cursor: pointer;
+    }
+    &.is-do > span {
+      text-decoration: line-through;
+    }
+  }
 }
 
 .taskCardWrap {

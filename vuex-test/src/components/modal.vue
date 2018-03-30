@@ -2,7 +2,7 @@
   <div @click="hideModal">
     <div class="modalBack"></div>
     <div class="modalContents">
-      <span>{{ modalTitle }}を追加しました！</span>
+      <span>{{ modalTitle }} を追加しました！</span>
     </div>
   </div>
 </template>

@@ -6,12 +6,16 @@ const actions = {
   addTask(context, payload) {
     let newItem = null;
     if(payload !== ""){
+      console.log(payload.nowType);
       newItem = {
-        title: payload,
+        id: context.state.nextId,
         is_do: false,
+        controlFlag: true,
+        title: payload.title,
+        type: payload.type
       };
     }
-    context.commit('addTask', newItem);
+    context.commit('addTask', {newData: newItem, nowType: payload.nowType});
   },
   editTask(context, payload) {
     context.commit('editTask', payload);
@@ -28,20 +32,36 @@ const actions = {
       context.commit('getNavsData', res.data[0].navs);
     });
   },
-  async getAllTasksData(context, payload) {
-    const res = await axios.get(api);
-    console.log('axios')
+  getAllTasksData(context, payload) {
     let hasId = 0;
-    res.data[0].tasks.forEach(item => {
-      hasId = (item.id > hasId) ? item.id : hasId;
-    });
-    context.commit('getAllTasksData', {
-      taskData: res.data[0].tasks,
-      hasId: hasId
+    var taskGetter = function() {
+      return new Promise(function(resolve, reject) {
+        axios.get(api)
+        .then(res => {
+          res.data[0].tasks.forEach(item => {
+            hasId = (item.id > hasId) ? item.id : hasId;
+          });
+          hasId++;
+          resolve({
+            taskData: res.data[0].tasks,
+            hasId: hasId
+          });
+        }).catch(res => {
+          reject("取得に失敗しました。");
+        });
+      });
+    }
+    taskGetter()
+    .then(function(data) { 
+      context.commit('getAllTasksData', data);
+      context.commit('getTasksData', payload);
     });
   },
   getTasksData(context, payload) {
     context.commit('getTasksData', payload);
+  },
+  applyTaskData(context, payload) {
+    context.commit('applyTaskData', payload);
   },
 };
 export default actions;

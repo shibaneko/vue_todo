@@ -23,12 +23,6 @@ export default {
       type: constantFile.TASKS_NAME_HOME,
     };
   },
-  created() {
-    console.log("HOME");
-    this.getTasksData({
-      type: this.type
-    });
-  },
   computed: {
     ...mapState({
       tasks: state => state.tasks,
@@ -36,7 +30,6 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(['getTasksData']),
     ...mapActions('modal', [
       'showModal',
     ]),

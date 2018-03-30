@@ -8,13 +8,16 @@ const editModal = {
   },
   actions: {
     showEditModal(context, payload) {
-      context.commit('showEditModal', payload);
+      const targetTask = context.rootState.tasks.filter(item => {
+        return (item.id === payload);
+      });
+      context.commit('showEditModal', targetTask[0]);
     },
     hideEditModal(context, payload) {
       context.commit('hideEditModal');
     },
     setTaskName(context, payload) {
-      context.rootState.items.forEach(function(item, index, array) {
+      context.rootState.tasks.forEach(function(item, index, array) {
         if (context.state.editId === item.id) {
           array[index].title = payload;
         }
@@ -22,7 +25,7 @@ const editModal = {
       context.state.taskName = payload;
     },
     deleteTask(context, payload) {
-      context.rootState.items.forEach(function(item, index, array) {
+      context.rootState.tasks.forEach(function(item, index, array) {
         if (context.state.editId === item.id) {
           array.splice(index, 1);
         }
@@ -31,7 +34,7 @@ const editModal = {
       context.commit('hideEditModal');
     },
     setTaskDo(context, payload) {
-      context.rootState.items.forEach(function(item, index, array) {
+      context.rootState.tasks.forEach(function(item, index, array) {
         if (context.state.editId === item.id) {
           array[index].is_do = payload;
         }
@@ -41,10 +44,11 @@ const editModal = {
   },
   mutations: {
     showEditModal(state, payload) {
+      console.log(payload);
       state.taskName = payload.title;
-      state.editId = payload.id;
       state.showEditFlag = true;
       state.is_do = payload.is_do;
+      state.editId = payload.id;
     },
     hideEditModal(state, payload) {
       state.taskName = "";

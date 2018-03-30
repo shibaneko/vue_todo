@@ -34,8 +34,7 @@ export default {
   },
   created() {
     this.getNavsData();
-    this.getAllTasksData();
-    console.log(this.$route);
+    this.getAllTasksData(this.$route.name);
   },
   computed: {
     ...mapState('modal', {
@@ -45,13 +44,23 @@ export default {
       showEditFlag: state => state.showEditFlag,
     }),
   },
+  watch: {
+    $route: 'routeSet',
+  },
   methods: {
     ...mapActions([
       'getNavsData',
       'getAllTasksData',
+      'getTasksData',
+      'applyTaskData',
     ]),
+    routeSet: function(to, from) {
+      this.applyTaskData(from.name);
+      this.getTasksData(to.name);
+    },
   },
 };
+
 </script>
 <style lang="scss" scoped>
 .wrapper {

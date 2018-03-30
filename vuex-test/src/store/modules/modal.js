@@ -14,7 +14,7 @@ const modal = {
   },
   mutations: {
     showModal(state, payload) {
-      state.modalTitle = payload.payload;
+      state.modalTitle = payload.title;
       state.showFlag = true;
     },
     hideModal(state, payload) {

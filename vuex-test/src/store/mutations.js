@@ -3,12 +3,18 @@ import Vue from 'vue';
 const mutations = {
   addTask(state, payload) {
     if(payload !== null) {
-      state.tasks.push(payload.data);
-        state.addText = payload.data.title;
+
+      if(payload.newData.type === payload.nowType) {
+        state.tasks.push(payload.newData);
+      } else {
+        state.allTasks.push(payload.newData);
+      }
+
+      state.addText = payload.newData.title;
       if(!state.modal.showFlag) {
         state.modal.showFlag = true;
         state.modal.modalType = 1;
-        let title = payload.data.title;
+        let title = payload.newData.title;
         if(title.length > 20) {
           title = title.slice(-(title.length - 20)) + "...";
         }
@@ -33,16 +39,52 @@ const mutations = {
     Vue.set(state, 'navs', payload);
   },
   getAllTasksData(state, payload) {
-    console.log("ALL"+payload.taskData);
-    Vue.set(state, 'nextId', state.nextId);
+    payload.taskData.map(item => {
+      Object.assign(item, {controlFlag: true});
+    });
+    Vue.set(state, 'nextId', payload.hasId);
     Vue.set(state, 'allTasks', payload.taskData);
   },
   getTasksData(state, payload) {
-    console.log('filter')
     const tas = state.allTasks.filter((task) => {
-      return (task.type === payload.type);
+      return (task.type === payload);
     });
     Vue.set(state, 'tasks', tas);
+  },
+  applyTaskData(state, payload) {
+    
+    state.allTasks.forEach((item, index, array) => {
+      if(item.type === payload) {
+        array[index].controlFlag = false;
+      }
+    });
+    
+    state.tasks.forEach((item, index, array) => {
+      array[index].controlFlag = false;
+    });
+
+    state.allTasks.forEach((aItem, aIndex, aArray) => {
+      state.tasks.forEach((item, index, array) => {
+        if(aItem.id === item.id) {
+          aArray[aIndex] = array[index];
+          aArray[aIndex].controlFlag = true;
+          array[index].controlFlag = true;
+        }
+      });  
+    });
+
+    state.allTasks.some((item, index, array) => {
+      if(!item.controlFlag) {
+        array.splice(index, 1);
+      }
+    });
+
+    state.tasks.forEach((item, index, array) => {
+      if(!item.controlFlag) {
+        array[index].controlFlag = true;
+        state.allTasks.push(item);
+      }
+    });
   },
 };
 export default mutations;

@@ -4,11 +4,6 @@
     <div class="taskDeck">
       <item :tasks="tasks"></item>
     </div>
-    <ul v-if="tasks.length">
-      <li v-for="task in tasks" :key="task.id">
-        {{ task.title }}
-      </li>
-    </ul>
   </div>
 </template>
 <script>
@@ -25,18 +20,10 @@ export default {
       type: constantFile.TASKS_NAME_SUB2,
     };
   },
-  created() {
-    this.getTasksData({
-      type: this.type,
-    });
-  },
   computed: {
     ...mapState({
       tasks: state => state.tasks,
     }),
-  },
-  methods: {
-    ...mapActions(['getTasksData']),
   },
 };
 </script>

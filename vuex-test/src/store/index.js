@@ -33,6 +33,9 @@ export default new Vuex.Store({
         return !item.is_do;
       }).length;
     },
+    navsData: store => {
+      return store.navs;
+    },
   },
   modules: {
     modal,
