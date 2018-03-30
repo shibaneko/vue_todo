@@ -9,7 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   namespaced: true, 
   state: {
-    taskTyps: 'home',
+    taskTypes: 'home',
     version: '0.5.1',
     nextId: 0,
     navs: [],
